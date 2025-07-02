@@ -15,7 +15,14 @@ A TypeScript library and CLI tool to parse MediaInfo output from text files and 
 
 ### Installation
 ```bash
+# npm
 npm install mi-parser
+
+# pnpm  
+pnpm add mi-parser
+
+# yarn
+yarn add mi-parser
 ```
 
 ### Basic Usage
@@ -65,22 +72,22 @@ const mediaInfo: MediaInfo = parseMediaInfo(text);
 ### Installation
 1. Install dependencies:
 ```bash
-npm install
+pnpm install
 ```
 
 2. Build the project:
 ```bash
-npm run build
+pnpm run build
 ```
 
 ### Basic usage:
 ```bash
-npm start <mediainfo-file.txt>
+pnpm start <mediainfo-file.txt>
 ```
 
 ### Using development mode (no build required):
 ```bash
-npm run dev <mediainfo-file.txt>
+pnpm run dev <mediainfo-file.txt>
 ```
 
 ### Command line options:
@@ -94,16 +101,16 @@ npm run dev <mediainfo-file.txt>
 
 ```bash
 # Display formatted output
-npm start sample.txt
+pnpm start sample.txt
 
 # Show summary only
-npm start sample.txt --summary
+pnpm start sample.txt --summary
 
 # Output as YAML to console
-npm start sample.txt --yaml
+pnpm start sample.txt --yaml
 
 # Output as YAML to file
-npm start sample.txt --yaml --output mediainfo.yaml
+pnpm start sample.txt --yaml --output mediainfo.yaml
 ```
 
 ## Sample MediaInfo Output
@@ -134,9 +141,9 @@ Sampling rate                            : 48.0 kHz
 
 ## Development
 
-- `npm run dev <file>`: Run CLI in development mode with tsx
-- `npm run build`: Compile TypeScript to JavaScript
-- `npm run test`: Build and run the compiled version
+- `pnpm run dev <file>`: Run CLI in development mode with tsx
+- `pnpm run build`: Compile TypeScript to JavaScript
+- `pnpm run test`: Build and run the compiled version
 
 ## Publishing
 
@@ -161,8 +168,8 @@ This project uses GitHub Actions for automated releases:
 
 ### Manual Publishing
 ```bash
-npm run build
-npm publish --access public
+pnpm run build
+pnpm publish --access public
 ```
 
 ## Project Structure

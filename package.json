@@ -18,8 +18,8 @@
     "build": "tsc",
     "start": "node dist/main.js",
     "dev": "tsx main.ts",
-    "test": "npm run build && npm start",
-    "prepublishOnly": "npm run build"
+    "test": "pnpm run build && pnpm start",
+    "prepublishOnly": "pnpm run build"
   },
   "keywords": ["mediainfo", "parser", "cli", "media", "video", "audio", "typescript", "library"],
   "files": [
