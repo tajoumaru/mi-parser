@@ -1,6 +1,6 @@
 {
   "name": "mi-parser",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A CLI tool to parse MediaInfo output",
   "main": "dist/mediainfo.js",
   "types": "dist/mediainfo.d.ts",
