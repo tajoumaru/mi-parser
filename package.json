@@ -1,0 +1,52 @@
+{
+  "name": "mi-parser",
+  "version": "0.1.0",
+  "description": "A CLI tool to parse MediaInfo output",
+  "main": "dist/mediainfo.js",
+  "types": "dist/mediainfo.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/mediainfo.js",
+      "types": "./dist/mediainfo.d.ts"
+    },
+    "./cli": {
+      "import": "./dist/main.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/main.js",
+    "dev": "tsx main.ts",
+    "test": "npm run build && npm start",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": ["mediainfo", "parser", "cli", "media", "video", "audio", "typescript", "library"],
+  "files": [
+    "dist/",
+    "README.md"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "commander": "^11.0.0",
+    "yaml": "^2.3.0"
+  },
+  "peerDependenciesMeta": {
+    "commander": {
+      "optional": true
+    },
+    "yaml": {
+      "optional": true
+    }
+  },
+  "bin": {
+    "mi-parser": "./dist/main.js"
+  }
+} 

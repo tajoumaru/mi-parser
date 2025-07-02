@@ -1,0 +1,75 @@
+name: Release and Publish
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install CLI dependencies for build
+        run: npm install commander yaml
+
+      - name: Build project
+        run: npm run build
+
+      - name: Run tests
+        run: npm test
+
+      - name: Extract version from tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Extract release notes
+        id: extract_notes
+        run: |
+          if [ -f CHANGELOG.md ]; then
+            # Extract release notes from CHANGELOG.md between current version and previous version
+            awk '/^## \[${{ steps.get_version.outputs.VERSION }}\]/{flag=1; next} /^## \[/{flag=0} flag' CHANGELOG.md > release_notes.txt || echo "Release v${{ steps.get_version.outputs.VERSION }}" > release_notes.txt
+          else
+            echo "Release v${{ steps.get_version.outputs.VERSION }}" > release_notes.txt
+          fi
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release v${{ steps.get_version.outputs.VERSION }}
+          body_path: release_notes.txt
+          draft: false
+          prerelease: false
+
+      - name: Publish to npm
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub Package Registry entry
+        run: |
+          echo "@$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]'):registry=https://npm.pkg.github.com" >> .npmrc
+          npm publish --registry=https://npm.pkg.github.com
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
